@@ -1,10 +1,27 @@
 #!/usr/bin/ruby
 
 require 'sinatra'
+require 'twitter'
 
 set :bind, '0.0.0.0'
+
+# Configure Twitter
+Twitter.configure do |config|
+  config.consumer_key = 'fn0QgIwGCJ27vJWkFY3hVw'
+  config.consumer_secret = 'DJu8ilh2LovDdzDFPlTs0cqWFhnAX4RI9Ewr2nVGE'
+  #config.oauth_token = YOUR_OAUTH_TOKEN
+  #config.oauth_token_secret = YOUR_OAUTH_TOKEN_SECRET
+end
 
 get '/' do
   haml :index
 end
 
+post '/gen' do
+  haml_return = ''
+  request['usernames'].each_line do |username|
+    url = Twitter.user(username).profile_image_url
+    haml_return += "%img{src: \"#{url}\"}\n"
+  end
+  haml haml_return
+end
