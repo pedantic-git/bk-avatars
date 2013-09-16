@@ -9,6 +9,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "https://github.com/downloads/roderik/VagrantQuantal64Box/quantal64.box"
 
   config.vm.network :forwarded_port, guest: 4567, host: 4567
+  # FIXME: dirty hack to get working on home MacBook... Fix it!
+  config.vm.network :public_network, :bridge => 'en1: Wi-Fi (AirPort)'
 
   # config.vm.provision :puppet do |puppet|
   #   puppet.manifests_path = "manifests"
